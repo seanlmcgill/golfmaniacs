@@ -1,21 +1,21 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap';
-import profilePicture from './profile.jpg';
+import { Card, Spinner } from 'react-bootstrap';
+import { useUserContext } from '../../providers/userProvider';
+import emptyProfile from './empty-profile.png';
 import styles from './ProfileCard.module.scss';
 
 export const ProfileCard: React.FC = () => {
+  const userContext = useUserContext();
+  const loading = userContext?.loading ?? true;
+  const user = userContext?.user;
+  const name = user ? `${user?.givenName} ${user?.surName}` : '';
   return (
-    <div>
-      <Card>
-        <Card.Img variant="top" src={profilePicture} className={styles.profileImage} />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-    </div>
+    <Card className={styles.profile}>
+      <Card.Img variant="top" src={emptyProfile} />
+      <Card.Body>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text as="div">{loading ? <Spinner animation="border" /> : user?.about}</Card.Text>
+      </Card.Body>
+    </Card>
   );
 };

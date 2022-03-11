@@ -1,7 +1,10 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { useUserContext } from '../../providers/userProvider';
 
 export const GmNavBar: React.FC = () => {
+  const userContext = useUserContext();
+  const email: string | undefined = userContext?.user?.email;
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -15,7 +18,7 @@ export const GmNavBar: React.FC = () => {
             <Nav.Link href="friends">Friends</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
+            <Nav.Link href="">{email}</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
